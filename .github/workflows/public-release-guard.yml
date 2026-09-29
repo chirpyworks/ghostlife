@@ -45,8 +45,8 @@ jobs:
 
           echo "No blocked credential pattern found."
 
-      - name: Verify proprietary notice
+      - name: Verify open-source license
         run: |
           test -f LICENSE
-          grep -qi "No open-source license is granted" LICENSE
-          grep -qi "public deployment mirror" README.md
+          grep -qi "MIT License" LICENSE
+          grep -qi "open-source" README.md
