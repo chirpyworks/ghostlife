@@ -493,9 +493,11 @@ document.getElementById("langKo").addEventListener("click",()=>setLang("ko"));
 document.getElementById("langEn").addEventListener("click",()=>setLang("en"));
 
 function buildUrl(params={},hash=""){
-  const u=new URL(location.origin+location.pathname);
+  const rootPath=location.pathname.replace(/en\.html$/,"");
+  const sharePath=lang==="en"?rootPath+"en.html":rootPath;
+  const u=new URL(location.origin+sharePath);
   Object.entries(params).forEach(([k,v])=>{if(v!=null&&v!=="")u.searchParams.set(k,v)});
-  if(lang==="en")u.searchParams.set("lang","en");
+  if(lang!=="en")u.searchParams.delete("lang");
   return u.toString()+hash;
 }
 function renderInviteNote(){
