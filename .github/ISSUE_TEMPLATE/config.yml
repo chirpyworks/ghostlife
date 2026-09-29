@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Live GHOSTLIFE demo
+    url: https://chirpyworks.github.io/ghostlife/
+    about: Try the current public build before opening an issue.
