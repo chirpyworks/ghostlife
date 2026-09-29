@@ -1,9 +1,6 @@
-name: Publish GitHub metadata and v1.0.0
+name: Publish GitHub release
 
 on:
-  push:
-    paths:
-      - ".github/workflows/publish-github.yml"
   workflow_dispatch:
 
 permissions:
@@ -17,11 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set repository topics
-        continue-on-error: true
-        run: |
-          gh api             --method PUT             -H "Accept: application/vnd.github+json"             -H "X-GitHub-Api-Version: 2022-11-28"             "/repos/${GITHUB_REPOSITORY}/topics"             -F "names[]=javascript"             -F "names[]=vanilla-js"             -F "names[]=creative-coding"             -F "names[]=interactive-fiction"             -F "names[]=choice-game"             -F "names[]=generative-design"             -F "names[]=bilingual"             -F "names[]=korean"             -F "names[]=github-pages"             -F "names[]=open-source"
-
       - name: Create v1.0.0 release
         run: |
           if gh release view v1.0.0 >/dev/null 2>&1; then
@@ -29,9 +21,3 @@ jobs:
           else
             gh release create v1.0.0               --target "${GITHUB_SHA}"               --title "GHOSTLIFE v1.0.0"               --notes-file CHANGELOG.md
           fi
-
-      - name: Summary
-        run: |
-          echo "## GHOSTLIFE GitHub launch" >> "${GITHUB_STEP_SUMMARY}"
-          echo "- Release: v1.0.0" >> "${GITHUB_STEP_SUMMARY}"
-          echo "- Topics requested: javascript, vanilla-js, creative-coding, interactive-fiction, choice-game, generative-design, bilingual, korean, github-pages, open-source" >> "${GITHUB_STEP_SUMMARY}"
