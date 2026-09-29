@@ -48,9 +48,6 @@ function setLang(next){
     }
   }
 }
-document.getElementById("langKo").addEventListener("click",()=>setLang("ko"));
-document.getElementById("langEn").addEventListener("click",()=>setLang("en"));
-
 function buildUrl(params={},hash=""){
   const rootPath=location.pathname.replace(/en\.html$/,"");
   const sharePath=lang==="en"?rootPath+"en.html":rootPath;
@@ -227,10 +224,16 @@ function duoHtml(a,b){
   const A=getArchetypeView(a),B=getArchetypeView(b),d=duoData(a,b);
   return '<div class="duo-card"><div class="eyebrow">'+t("firstGhost")+'</div><h3>'+A.n+'</h3><p>'+A.city+' · '+A.object+'</p></div>'+
   '<div class="duo-card"><div class="eyebrow">'+t("secondGhost")+'</div><h3>'+B.n+'</h3><p>'+B.city+' · '+B.object+'</p></div>'+
-  '<div class="duo-card" style="grid-column:1/-1"><div class="eyebrow">'+t("whereMeet")+'</div><h3>'+d.scene+'</h3><p class="duo-scene-copy">'+d.reason+'<br><br><strong>'+t("clash")+'</strong><br>'+d.clash+'<br><br><strong>'+t("shared")+'</strong><br>'+d.shared+'</p></div>';
+  '<div class="duo-card span-all"><div class="eyebrow">'+t("whereMeet")+'</div><h3>'+d.scene+'</h3><p class="duo-scene-copy">'+d.reason+'<br><br><strong>'+t("clash")+'</strong><br>'+d.clash+'<br><br><strong>'+t("shared")+'</strong><br>'+d.shared+'</p></div>';
 }
 function renderAutoDuo(a,b,trackCreate=true){
-  const el=document.getElementById("autoDuo");el.innerHTML=duoHtml(a,b)+'<div class="duo-actions" style="grid-column:1/-1"><button class="btn" onclick="downloadDuoPoster(\''+a+'\',\''+b+'\')">'+t("saveDuoPoster")+'</button><button class="btn secondary" onclick="shareDuo(\''+a+'\',\''+b+'\')">'+t("shareDuo")+'</button></div>';el.classList.add("active");
+  const el=document.getElementById("autoDuo");
+  el.innerHTML=duoHtml(a,b)+
+    '<div class="duo-actions span-all">'+
+      '<button class="btn" data-action="download-duo-poster" data-a="'+a+'" data-b="'+b+'">'+t("saveDuoPoster")+'</button>'+
+      '<button class="btn secondary" data-action="share-duo" data-a="'+a+'" data-b="'+b+'">'+t("shareDuo")+'</button>'+
+    '</div>';
+  el.classList.add("active");
   if(trackCreate)track("compare_create",{a,b,automatic:true});
 }
 function openCompare(){
@@ -279,6 +282,33 @@ async function shareDuo(a,b){
 function renderStandaloneDuo(a,b,trackVisit=true){
   duoPair=[a,b];document.getElementById("duo").innerHTML=duoHtml(a,b);document.getElementById("duo").classList.add("active");document.getElementById("duoActions").style.display="flex";document.getElementById("compareInputs").style.display="none";document.getElementById("returnResult").style.display="none";show("compare");if(trackVisit)track("compare_visit",{a,b});
 }
+
+function handleActionClick(event){
+  const button=event.target.closest("[data-action]");
+  if(!button)return;
+
+  const action=button.dataset.action;
+  const handlers={
+    "start-test":()=>startTest(),
+    "download-poster":()=>downloadPoster(),
+    "share-result":()=>shareResult(),
+    "invite-friend":()=>shareCompareInvite(),
+    "open-compare":()=>openCompare(),
+    "restart":()=>restart(),
+    "copy-code":()=>copyCode(),
+    "make-duo":()=>makeDuo(),
+    "download-duo-poster":()=>downloadDuoPoster(button.dataset.a,button.dataset.b),
+    "share-duo":()=>shareDuo(button.dataset.a,button.dataset.b),
+    "start-fresh":()=>startFresh(),
+    "back-result":()=>show("result"),
+    "set-lang":()=>setLang(button.dataset.lang)
+  };
+
+  handlers[action]?.();
+}
+
+document.addEventListener("click",handleActionClick);
+
 window.addEventListener("load",()=>{
   applyLanguage();
   renderInviteNote();
