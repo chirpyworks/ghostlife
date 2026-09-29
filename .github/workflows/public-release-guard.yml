@@ -19,11 +19,30 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          PATTERN='(sk-[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|client_secret[[:space:]]*[:=][[:space:]]*["'\'''][^"'\''']+|password[[:space:]]*[:=][[:space:]]*["'\'''][^"'\''']+)'
-          if grep -RInE --exclude-dir=.git --exclude='*.md' --exclude='LICENSE' "$PATTERN" .; then
-            echo "Potential secret found. Public release blocked."
+
+          fail=0
+
+          scan() {
+            label="$1"
+            pattern="$2"
+            if grep -RInE --exclude-dir=.git --exclude='*.md' --exclude='LICENSE' "$pattern" .; then
+              echo "Potential secret pattern detected: $label"
+              fail=1
+            fi
+          }
+
+          scan "OpenAI-style secret" 'sk-[A-Za-z0-9_-]{20,}'
+          scan "GitHub PAT" 'ghp_[A-Za-z0-9]{20,}'
+          scan "GitHub fine-grained PAT" 'github_pat_[A-Za-z0-9_]{20,}'
+          scan "Private key block" 'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY'
+          scan "Client secret assignment" 'client_secret[[:space:]]*[:=]'
+          scan "Password assignment" 'password[[:space:]]*[:=]'
+
+          if [ "$fail" -ne 0 ]; then
+            echo "Public release blocked."
             exit 1
           fi
+
           echo "No blocked credential pattern found."
 
       - name: Verify proprietary notice
