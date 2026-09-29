@@ -39,7 +39,7 @@
 </head>
 <body>
 <main class="app">
-<div class="lang-switch" role="group" aria-label="Language"><button id="langKo" type="button">KR</button><button id="langEn" type="button">EN</button></div>
+<div class="lang-switch" role="group" aria-label="Language"><button id="langKo" type="button" data-action="set-lang" data-lang="ko">KR</button><button id="langEn" type="button" data-action="set-lang" data-lang="en">EN</button></div>
 <section id="landing" class="screen landing active">
   <div class="brand"><strong>GHOSTLIFE</strong><span class="counter">AN ALTERNATE LIFE INDEX</span></div>
   <div class="hero">
@@ -47,7 +47,7 @@
     <h1 data-i18n-html="heroTitle"><span class="line">그때 다른 선택을 했다면,</span><span class="line">나는 지금</span><em>어떤 삶을 살고 있을까?</em></h1>
     <p data-i18n="heroBody">여덟 장면에서 망설이지 말고 마음이 먼저 가는 쪽을 고르세요. 마지막에는 지금과 조금 다른 삶을 살고 있는 또 하나의 내가 나타납니다. 정답도, 진단도 없습니다.</p><div id="inviteNote" class="invite-note"></div>
   </div>
-  <div class="cta-row"><button class="btn" data-i18n="startBtn" onclick="startTest()">다른 삶의 나 만나기</button><span class="fine" data-i18n-html="landingFine">약 1분 · 로그인 없이 · 무료 · <a href="privacy.html">개인정보 안내</a></span></div>
+  <div class="cta-row"><button class="btn" data-i18n="startBtn" data-action="start-test">다른 삶의 나 만나기</button><span class="fine" data-i18n-html="landingFine">약 1분 · 로그인 없이 · 무료 · <a href="privacy.html">개인정보 안내</a></span></div>
 </section>
 
 <section id="test" class="screen test">
@@ -87,11 +87,11 @@
     <div id="decision" class="decision"></div>
     <div id="autoDuo" class="duo auto-duo"></div>
     <div class="actions">
-      <button class="btn" data-i18n="savePoster" onclick="downloadPoster()">포스터 저장</button>
-      <button class="btn secondary" data-i18n="shareResult" onclick="shareResult()">결과 공유</button>
-      <button class="btn secondary" data-i18n="inviteFriend" onclick="shareCompareInvite()">친구 초대</button>
-      <button class="btn secondary" data-i18n="compareCode" onclick="openCompare()">코드로 비교</button>
-      <button class="btn secondary" data-i18n="retake" onclick="restart()">다시 선택</button>
+      <button class="btn" data-i18n="savePoster" data-action="download-poster">포스터 저장</button>
+      <button class="btn secondary" data-i18n="shareResult" data-action="share-result">결과 공유</button>
+      <button class="btn secondary" data-i18n="inviteFriend" data-action="invite-friend">친구 초대</button>
+      <button class="btn secondary" data-i18n="compareCode" data-action="open-compare">코드로 비교</button>
+      <button class="btn secondary" data-i18n="retake" data-action="restart">다시 선택</button>
     </div>
     <div class="fine" data-i18n-html="disclaimer">GHOSTLIFE는 심리검사가 아닙니다. 여덟 개의 선택으로 상상해보는 ‘살지 않은 나’에 가깝습니다. · <a href="privacy.html">개인정보 안내</a></div>
   </aside>
@@ -102,16 +102,16 @@
   <h2 data-i18n-html="compareTitle">다른 삶의 우리 둘은 <em>어디서 처음 만났을까?</em></h2>
   <p data-i18n="compareBody">각자의 GHOST 코드를 넣으면 두 사람이 다른 삶에서 마주쳤을 법한 한 장면을 보여줍니다.</p>
   <div id="compareInputs">
-    <div class="share-code"><label class="sr-only" data-i18n="myCodeLabel" for="myCode">내 GHOST 코드</label><input id="myCode" aria-label="내 GHOST 코드" readonly/><button class="btn" data-i18n="copy" onclick="copyCode()">복사</button></div>
-    <div class="share-code" style="margin-top:10px"><label class="sr-only" data-i18n="friendCodeLabel" for="friendCode">친구 GHOST 코드</label><input id="friendCode" aria-label="친구 GHOST 코드" placeholder="친구 코드 입력"/><button class="btn secondary" data-i18n="seeScene" onclick="makeDuo()">장면 보기</button></div>
+    <div class="share-code"><label class="sr-only" data-i18n="myCodeLabel" for="myCode">내 GHOST 코드</label><input id="myCode" aria-label="내 GHOST 코드" readonly/><button class="btn" data-i18n="copy" data-action="copy-code">복사</button></div>
+    <div class="share-code share-code-secondary"><label class="sr-only" data-i18n="friendCodeLabel" for="friendCode">친구 GHOST 코드</label><input id="friendCode" aria-label="친구 GHOST 코드" placeholder="친구 코드 입력"/><button class="btn secondary" data-i18n="seeScene" data-action="make-duo">장면 보기</button></div>
   </div>
   <div id="duo" class="duo"></div>
-  <div id="duoActions" class="duo-actions" style="display:none">
-    <button class="btn" data-i18n="saveDuoPoster" onclick="downloadDuoPoster()">둘의 포스터 저장</button>
-    <button class="btn secondary" data-i18n="shareDuo" onclick="shareDuo()">둘의 장면 공유</button>
-    <button class="btn secondary" data-i18n="tryIt" onclick="startFresh()">나도 해보기</button>
+  <div id="duoActions" class="duo-actions">
+    <button class="btn" data-i18n="saveDuoPoster" data-action="download-duo-poster">둘의 포스터 저장</button>
+    <button class="btn secondary" data-i18n="shareDuo" data-action="share-duo">둘의 장면 공유</button>
+    <button class="btn secondary" data-i18n="tryIt" data-action="start-fresh">나도 해보기</button>
   </div>
-  <div id="returnResult" style="margin-top:30px"><button class="btn secondary" data-i18n="backResult" onclick="show('result')">내 결과로 돌아가기</button></div>
+  <div id="returnResult" class="return-result"><button class="btn secondary" data-i18n="backResult" data-action="back-result">내 결과로 돌아가기</button></div>
 </section>
 </main>
 <script src="src/data.js"></script>
