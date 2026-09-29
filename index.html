@@ -392,7 +392,19 @@ function show(id){
   const el=document.getElementById(id);el.classList.add("active");el.setAttribute("tabindex","-1");
   requestAnimationFrame(()=>{try{el.focus({preventScroll:true})}catch(e){}})
 }
-function startTest(){qi=0;picks=[];s={stay:0,leave:0,order:0,impulse:0,hidden:0,seen:0,build:0,experience:0};track("test_start",{invited:!!invitedByKey});show("test");renderQ()}
+function resetQuizUI(){
+  const wrap=document.querySelector(".question-wrap");
+  if(wrap)wrap.classList.remove("is-switching");
+  const answers=document.getElementById("answers");
+  if(answers)answers.innerHTML="";
+}
+function startTest(){
+  qi=0;picks=[];s={stay:0,leave:0,order:0,impulse:0,hidden:0,seen:0,build:0,experience:0};
+  resetQuizUI();
+  track("test_start",{invited:!!invitedByKey});
+  show("test");
+  renderQ();
+}
 function renderQ(){const q=questions[qi];document.getElementById("qnum").textContent=String(qi+1).padStart(2,"0");document.getElementById("stepText").textContent=String(qi+1).padStart(2,"0")+" / 08";document.getElementById("progressBar").style.width=((qi+1)/8*100)+"%";document.getElementById("qtext").textContent=q[0];document.getElementById("answers").innerHTML=q[1].map((a,i)=>'<button class="answer" onclick="choose('+i+')"><span>'+String.fromCharCode(65+i)+'</span><span>'+a[0]+'</span></button>').join("")}
 function choose(i){
   const wrap=document.querySelector(".question-wrap");wrap.classList.add("is-switching");
@@ -484,7 +496,15 @@ async function shareResult(){
   if(navigator.share){try{await navigator.share({title:"GHOSTLIFE — "+current.n,text,url});track("share_export",{type:"result_link",result:currentKey});return}catch(e){}}
   await navigator.clipboard.writeText(text+" "+url);track("share_export",{type:"result_link",result:currentKey,method:"clipboard"});alert("결과 문구가 복사됐어요.")
 }
-function restart(){track("retake",{from:currentKey});history.replaceState(null,"",location.pathname);invitedByKey="";startTest()}
+function restart(){
+  track("retake",{from:currentKey});
+  history.replaceState(null,"",location.pathname);
+  invitedByKey="";duoPair=null;current=null;currentKey="";
+  const autoDuo=document.getElementById("autoDuo");
+  if(autoDuo){autoDuo.classList.remove("active");autoDuo.innerHTML="";}
+  resetQuizUI();
+  startTest();
+}
 function startFresh(){history.replaceState(null,"",location.pathname);location.reload()}
 
 function baseUrl(){return location.origin+location.pathname}
