@@ -1,0 +1,33 @@
+name: Public Release Guard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Reject common credential patterns
+        shell: bash
+        run: |
+          set -euo pipefail
+          PATTERN='(sk-[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|client_secret[[:space:]]*[:=][[:space:]]*["'\'''][^"'\''']+|password[[:space:]]*[:=][[:space:]]*["'\'''][^"'\''']+)'
+          if grep -RInE --exclude-dir=.git --exclude='*.md' --exclude='LICENSE' "$PATTERN" .; then
+            echo "Potential secret found. Public release blocked."
+            exit 1
+          fi
+          echo "No blocked credential pattern found."
+
+      - name: Verify proprietary notice
+        run: |
+          test -f LICENSE
+          grep -qi "No open-source license is granted" LICENSE
+          grep -qi "public deployment mirror" README.md
