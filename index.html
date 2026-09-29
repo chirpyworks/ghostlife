@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#0a0a0a"/>
+<title>GHOSTLIFE — 당신이 살지 않은 삶</title>
+<meta name="description" content="당신이 지금의 삶을 살지 않았다면, 어떤 사람이 되었을까? 8개의 선택으로 만나는 당신의 Ghostlife."/>
+<link rel="canonical" href="https://chirpyworks.github.io/ghostlife/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://chirpyworks.github.io/ghostlife/"/>
+<meta property="og:title" content="GHOSTLIFE — 당신이 살지 않은 삶"/>
+<meta property="og:description" content="8개의 선택으로 만나는 당신의 또 다른 삶."/>
+<meta property="og:image" content="https://chirpyworks.github.io/ghostlife/og-ghostlife.svg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="GHOSTLIFE — 당신이 살지 않은 삶"/>
+<meta name="twitter:description" content="8개의 선택으로 만나는 당신의 또 다른 삶."/>
+<meta name="twitter:image" content="https://chirpyworks.github.io/ghostlife/og-ghostlife.svg"/>
+<style>
+:root{--bg:#0a0a0a;--fg:#f1eee7;--muted:#9f9a91;--line:#34312d;--accent:#c5a56d;--pad:clamp(20px,5vw,64px);--serif:Georgia,"Times New Roman",serif;--sans:Inter,Arial,sans-serif}
+*{box-sizing:border-box}html{background:var(--bg);color:var(--fg)}body{margin:0;font-family:var(--sans);background:radial-gradient(circle at 70% 20%,#1b1814 0,transparent 28%),var(--bg);min-height:100vh}
+button{font:inherit}.app{min-height:100svh}.screen{display:none;min-height:100svh;padding:var(--pad)}.screen.active{display:flex}.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.landing{flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}
+.brand{display:flex;justify-content:space-between;align-items:center}.brand strong{letter-spacing:.18em;font-size:12px}.counter{font:12px/1 var(--serif);color:var(--muted)}
+.hero{max-width:1050px;padding:12vh 0 8vh}.hero h1{font:clamp(54px,10vw,150px)/.88 var(--serif);font-weight:400;letter-spacing:-.055em;margin:18px 0 28px;max-width:950px}.hero h1 em{font-style:italic;color:var(--accent)}.hero p{font-size:clamp(16px,2vw,23px);line-height:1.45;max-width:580px;color:#c9c5bd}
+.cta-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.btn{border:1px solid var(--fg);background:var(--fg);color:#111;padding:15px 20px;cursor:pointer;letter-spacing:.03em}.btn.secondary{background:transparent;color:var(--fg);border-color:var(--line)}.fine{color:var(--muted);font-size:12px;line-height:1.5}
+.test{flex-direction:column;max-width:1180px;margin:auto;width:100%}.test-head{display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line);padding-bottom:18px}.progress{height:1px;background:#292724;margin-top:10px;position:relative}.progress>i{display:block;height:1px;background:var(--fg);width:12.5%;transition:width .35s ease}
+.question-wrap{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:clamp(30px,8vw,110px);padding:8vh 0}.qnum{font:italic 21px/1 var(--serif);color:var(--accent)}.question h2{font:clamp(34px,5vw,70px)/1 var(--serif);font-weight:400;letter-spacing:-.035em;margin:14px 0}.answers{display:grid;gap:10px;align-content:start}.answer{display:grid;grid-template-columns:32px 1fr;gap:18px;text-align:left;background:transparent;color:var(--fg);border:0;border-top:1px solid var(--line);padding:20px 4px;cursor:pointer;transition:.2s}.answer:hover{padding-left:12px;border-color:var(--fg)}.answer span:first-child{font:italic 16px var(--serif);color:var(--muted)}
+.reveal{align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}.reveal:before{content:"";position:absolute;width:55vmin;height:55vmin;border:1px solid #27231e;border-radius:50%;animation:pulse 2s ease-in-out infinite}.reveal h2{font:clamp(40px,7vw,96px)/.95 var(--serif);font-weight:400;max-width:800px;margin:0;z-index:1}.reveal h2 i{display:block;color:var(--accent);font-weight:400}.signal{letter-spacing:.35em;font-size:10px;color:var(--muted);margin-bottom:24px;z-index:1}@keyframes pulse{50%{transform:scale(1.12);opacity:.45}}
+.result{padding:0;display:none;background:#050505}.result.active{display:grid;grid-template-columns:minmax(300px,38%) 1fr;min-height:100svh}.poster{position:relative;min-height:100svh;padding:clamp(24px,4vw,56px);background:linear-gradient(150deg,#11100f,#050505 58%,#19140d);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}.poster:before{content:"";position:absolute;inset:12%;border:1px solid rgba(197,165,109,.22);transform:rotate(-7deg)}.poster:after{content:"";position:absolute;width:44vmin;height:44vmin;border:1px solid rgba(197,165,109,.25);border-radius:50%;right:-18vmin;top:24%;box-shadow:0 0 90px rgba(197,165,109,.08)}
+.poster-top,.poster-mid,.poster-bottom{position:relative;z-index:2}.poster-id{font-size:10px;letter-spacing:.24em;color:#a9a39a}.poster h1{font:clamp(58px,7.2vw,116px)/.8 var(--serif);font-weight:400;letter-spacing:-.065em;margin:10vh 0 22px;max-width:760px}.poster h1 em{display:block;color:var(--accent);font-style:italic}.hero-line{font:clamp(18px,2vw,28px)/1.32 var(--serif);max-width:620px;color:#ddd8cf}.coords{display:flex;gap:20px;flex-wrap:wrap;padding-top:22px;border-top:1px solid rgba(255,255,255,.15);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#a9a39a}
+.result-panel{padding:clamp(30px,6vw,90px);display:flex;flex-direction:column;justify-content:center;gap:38px;background:#0d0d0d}.result-panel h3{font:36px/1 var(--serif);font-weight:400;margin:0}.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}.fact small{display:block;color:var(--muted);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}.fact b{font:20px/1.2 var(--serif);font-weight:400}.decision{border-left:1px solid var(--accent);padding-left:20px;color:#c7c1b8;line-height:1.55}.actions{display:flex;gap:10px;flex-wrap:wrap}
+.compare{flex-direction:column;justify-content:center;max-width:980px;margin:auto}.compare h2{font:clamp(46px,7vw,100px)/.9 var(--serif);font-weight:400;letter-spacing:-.05em;margin:18px 0}.compare p{max-width:600px;color:#bbb5ac;line-height:1.6}.duo{margin-top:42px;border-top:1px solid var(--line);padding-top:28px;display:none}.duo.active{display:grid;grid-template-columns:1fr 1fr;gap:22px}.duo-card{border:1px solid var(--line);padding:24px;min-height:230px}.duo-card h3{font:30px var(--serif);font-weight:400;margin:8px 0}.share-code{display:flex;gap:8px;max-width:600px}.share-code input{flex:1;background:#111;color:var(--fg);border:1px solid var(--line);padding:14px}
+.poster.LOHB{background:linear-gradient(145deg,#06080a 0,#0b0c0c 55%,#22190f 100%)}
+.poster.LOHB:before{inset:9% 16% 13% 9%;transform:rotate(-4deg);border-color:rgba(208,173,105,.35)}
+.poster.LOHB:after{border-radius:0;width:58%;height:1px;right:-5%;top:34%;box-shadow:0 46px 0 rgba(197,165,109,.16),0 92px 0 rgba(197,165,109,.09)}
+.poster.LIVE{background:linear-gradient(118deg,#211a15 0,#090909 43%,#24201d 100%)}
+.poster.LIVE:before{inset:17% -12% 18% 30%;transform:rotate(21deg);border:0;border-top:1px solid rgba(255,255,255,.38);border-bottom:1px solid rgba(255,255,255,.13)}
+.poster.LIVE:after{width:52%;height:74%;right:-19%;top:9%;border-radius:48% 18% 54% 12%;transform:rotate(-13deg);border-color:rgba(255,255,255,.23)}
+.poster.LIVE h1{transform:rotate(-2deg);transform-origin:left bottom}
+.poster.SOHB{background:linear-gradient(180deg,#080807,#0b0a08 72%,#15100b)}
+.poster.SOHB:before{inset:10%;transform:none;border-color:rgba(197,165,109,.19)}
+.poster.SOHB:after{width:22vmin;height:22vmin;right:10%;top:12%;border-radius:2px;border-color:rgba(197,165,109,.22);box-shadow:none}
+.poster.SOHB h1{letter-spacing:-.045em;max-width:580px}
+@media(max-width:820px){.question-wrap{grid-template-columns:1fr;padding-top:6vh}.result.active{grid-template-columns:1fr}.poster{min-height:100svh}.result-panel{min-height:75svh}.facts{grid-template-columns:1fr 1fr}.duo.active{grid-template-columns:1fr}.hero{padding-top:14vh}}
+</style>
+</head>
+<body>
+<main class="app">
+<section id="landing" class="screen landing active">
+  <div class="brand"><strong>GHOSTLIFE</strong><span class="counter">AN ALTERNATE LIFE INDEX</span></div>
+  <div class="hero">
+    <div class="eyebrow">8 choices · 1 unlived life</div>
+    <h1>당신이 지금의 삶을 살지 않았다면, <em>어떤 사람이 되었을까?</em></h1>
+    <p>여덟 개의 장면을 통과하면, 당신이 선택하지 않은 삶 하나가 나타납니다. 진단이 아니라 하나의 가능성입니다.</p>
+  </div>
+  <div class="cta-row"><button class="btn" onclick="startTest()">GHOSTLIFE 찾기</button><span class="fine">약 60초 · 로그인 없음 · 무료</span></div>
+</section>
+
+<section id="test" class="screen test">
+  <div class="test-head"><strong>GHOSTLIFE</strong><span id="stepText" class="eyebrow">01 / 08</span></div>
+  <div class="progress"><i id="progressBar"></i></div>
+  <div class="question-wrap">
+    <div class="question"><div id="qnum" class="qnum">01</div><h2 id="qtext"></h2></div>
+    <div id="answers" class="answers"></div>
+  </div>
+</section>
+
+<section id="reveal" class="screen reveal">
+  <div><div class="signal">SIGNAL FOUND / ALTERNATE TIMELINE</div><h2>당신이 살지 않은 삶을 <i>복원하는 중</i></h2></div>
+</section>
+
+<section id="result" class="screen result">
+  <article id="poster" class="poster">
+    <div class="poster-top"><div id="ghostId" class="poster-id">GHOST ID / 00</div></div>
+    <div class="poster-mid"><h1 id="resultTitle"></h1><div id="heroLine" class="hero-line"></div></div>
+    <div class="poster-bottom"><div id="coords" class="coords"></div></div>
+  </article>
+  <aside class="result-panel">
+    <div><div class="eyebrow">YOUR UNLIVED SELF</div><h3 id="resultKo"></h3></div>
+    <div id="facts" class="facts"></div>
+    <div id="decision" class="decision"></div>
+    <div class="actions">
+      <button class="btn" onclick="downloadPoster()">포스터 저장</button>
+      <button class="btn secondary" onclick="shareResult()">결과 공유</button>
+      <button class="btn secondary" onclick="openCompare()">친구와 비교</button>
+      <button class="btn secondary" onclick="restart()">다시 선택</button>
+    </div>
+    <div class="fine">GHOSTLIFE는 오락용 창작 경험이며 심리·성격 진단이 아닙니다.</div>
+  </aside>
+</section>
+
+<section id="compare" class="screen compare">
+  <div class="eyebrow">GHOSTLIFE / DUAL TIMELINE</div>
+  <h2>우리 둘은 다른 삶에서 <em>어디서 만났을까?</em></h2>
+  <p>내 결과 코드와 친구의 결과 코드를 합치면 둘만의 장면이 만들어집니다. 아래 코드를 친구에게 보내세요.</p>
+  <div class="share-code"><input id="myCode" readonly/><button class="btn" onclick="copyCode()">복사</button></div>
+  <div class="share-code" style="margin-top:10px"><input id="friendCode" placeholder="친구의 GHOST 코드 입력"/><button class="btn secondary" onclick="makeDuo()">합치기</button></div>
+  <div id="duo" class="duo"></div>
+  <div style="margin-top:30px"><button class="btn secondary" onclick="show('result')">내 결과로 돌아가기</button></div>
+</section>
+</main>
+<script>
+const A={stay:'S',leave:'L',order:'O',impulse:'I',hidden:'H',seen:'V',build:'B',experience:'E'};
+const questions=[
+["낯선 도시에서 막차를 놓쳤습니다.",[
+["가까운 숙소를 잡고 내일 일정을 다시 짠다",{stay:-1,order:-1}],
+["아는 동네를 벗어나지만 즉흥적으로 움직인다",{stay:-1,impulse:1}],
+["오늘 안에 다른 도시로 갈 방법부터 찾는다",{leave:1,order:-1}],
+["목적지를 정하지 않고 첫 차를 탄다",{leave:1,impulse:1}]
+]],
+["아름답고 텅 빈 건물을 물려받았습니다.",[
+["아무에게도 알리지 않고 오래 복원한다",{hidden:-1,build:-1}],
+["혼자 머물며 계절이 바뀌는 걸 본다",{hidden:-1,experience:1}],
+["사람들이 모일 수 있는 작업실로 만든다",{seen:1,build:-1}],
+["매달 다른 사람에게 열어 새로운 장면을 만든다",{seen:1,experience:1}]
+]],
+["성공이 보장된 10년짜리 경로가 열립니다.",[
+["받아들이되 조용히 내 방식으로 깊어진다",{stay:-1,hidden:-1}],
+["받아들이고 내 이름을 걸고 판을 바꾼다",{stay:-1,seen:1}],
+["거절하고 한동안 아무 설명 없이 떠난다",{leave:1,hidden:-1}],
+["거절하고 모두가 보는 앞에서 다른 길을 시작한다",{leave:1,seen:1}]
+]],
+["완전히 비어 있는 하루가 생겼습니다.",[
+["미뤄둔 것을 정리하고 하나를 완성한다",{order:-1,build:-1}],
+["동선을 정한 뒤 혼자 오래 걷는다",{order:-1,experience:1}],
+["손에 잡히는 재료로 무언가를 즉석에서 만든다",{impulse:1,build:-1}],
+["연락 없이 밖으로 나가 하루를 흘려보낸다",{impulse:1,experience:1}]
+]],
+["당신 이름으로 작은 공간 하나를 열 수 있습니다.",[
+["한 도시에서 오래 쓸 작업실로 만든다",{stay:-1,build:-1}],
+["한 도시의 계절을 온전히 보내는 방으로 만든다",{stay:-1,experience:1}],
+["여러 도시를 옮겨 다니는 이동식 스튜디오로 만든다",{leave:1,build:-1}],
+["도착할 때마다 쓰임이 달라지는 임시 공간으로 만든다",{leave:1,experience:1}]
+]],
+["처음 만난 사람들 사이에서 당신은 보통,",[
+["흐름을 읽고 필요한 순간에만 말한다",{order:-1,hidden:-1}],
+["흐름을 읽은 뒤 사람들을 자연스럽게 연결한다",{order:-1,seen:1}],
+["한두 사람과 예상 밖의 대화로 빠져든다",{impulse:1,hidden:-1}],
+["분위기를 먼저 바꾸고 사람들이 따라오게 한다",{impulse:1,seen:1}]
+]],
+["1년치 생활비를 받는 대신 한 가지 방식을 골라야 합니다.",[
+["한 도시에 머물며 엄격한 루틴을 지킨다",{stay:-1,order:-1}],
+["한 도시에 머물지만 매일 다른 방식으로 산다",{stay:-1,impulse:1}],
+["도시는 계속 바꾸되 일정은 철저히 관리한다",{leave:1,order:-1}],
+["계획 없이 계속 이동한다",{leave:1,impulse:1}]
+]],
+["당신이 남기고 싶은 마지막 장면은?",[
+["아무도 모르는 방 안에 완성된 하나의 물건",{hidden:-1,build:-1}],
+["아무도 모르는 장소에서 혼자 본 풍경",{hidden:-1,experience:1}],
+["많은 사람이 쓰게 될 당신 이름의 무언가",{seen:1,build:-1}],
+["여러 사람이 함께 기억하는 단 한 번의 밤",{seen:1,experience:1}]
+]]
+]
+const archetypes={
+"SOHB":{n:"THE QUIET EMPEROR",ko:"고요한 황제",city:"Kyoto",job:"복원 공방의 주인",desire:"정교함과 지속",fear:"소음이 의미를 지워버리는 것",object:"옻칠 상자",line:"당신은 작은 왕국을 만들었고, 굳이 설명하지 않았다.",decision:"더 멀리 가는 대신 더 깊이 들어가기로 한 결정."},
+"SOHE":{n:"THE MEMORY ENGINEER",ko:"기억의 설계자",city:"Vienna",job:"아카이브 필름메이커",desire:"사라지는 것의 보존",fear:"다시는 복원할 수 없는 상실",object:"35mm 슬라이드",line:"아무도 사라지는 줄 몰랐던 것들을 당신은 기록했다.",decision:"새로운 것보다 사라질 것을 먼저 보기 시작한 결정."},
+"SOVB":{n:"THE HERMIT ICON",ko:"은둔의 아이콘",city:"Antwerp",job:"가구 디자이너",desire:"단 하나의 저자성",fear:"자신의 언어가 희석되는 것",object:"검은 연필",line:"당신은 드러나려 애쓰지 않음으로써 가장 선명해졌다.",decision:"모두에게 보이기보다 정확하게 남기로 한 결정."},
+"SOVE":{n:"THE GARDEN GENERAL",ko:"정원의 장군",city:"Melbourne",job:"도시 정원 스튜디오 디렉터",desire:"돌봄과 지속",fear:"내가 떠난 뒤 사라질 것을 만드는 것",object:"씨앗 봉투",line:"당신은 통제의 다른 이름이 돌봄일 수도 있다는 걸 배웠다.",decision:"속도보다 오래 남는 구조를 택한 결정."},
+"SIHB":{n:"THE PUBLIC SECRET",ko:"공공의 비밀",city:"Seoul",job:"독립 매거진 창립자",desire:"자기 방식의 인정",fear:"보이지만 이해되지 않는 것",object:"은색 라이터",line:"모두가 이름은 알았지만, 삶을 아는 사람은 거의 없었다.",decision:"숨어 있기보다 자신의 세계를 공개하기로 한 결정."},
+"SIHE":{n:"THE AFTER-HOURS SAINT",ko:"심야의 성자",city:"Marseille",job:"심야 식당의 요리사",desire:"사람 사이의 온기",fear:"감각이 무뎌지는 것",object:"에나멜 컵",line:"당신의 진짜 하루는 다른 사람들이 집으로 간 뒤 시작됐다.",decision:"효율보다 사람을 오래 바라보기로 한 결정."},
+"SIVB":{n:"THE SOCIAL ALCHEMIST",ko:"사교의 연금술사",city:"London",job:"크리에이티브 프로듀서",desire:"관계의 전기",fear:"아무 일도 일어나지 않는 방",object:"샴페인 쿠페",line:"당신의 재능은 방에 들어가는 것이 아니라 방의 온도를 바꾸는 것이었다.",decision:"혼자 완성하기보다 사람을 엮기로 한 결정."},
+"SIVE":{n:"THE LAST ROMANTIC",ko:"마지막 낭만주의자",city:"Buenos Aires",job:"야간 사진가",desire:"강렬한 순간",fear:"희미하게만 기억되는 삶",object:"붉은 성냥갑",line:"당신은 사라질 걸 알면서도 순간을 택했다.",decision:"오래 남는 것보다 깊게 느끼는 것을 고른 결정."},
+"LOHB":{n:"THE NIGHT ARCHITECT",ko:"밤의 설계자",city:"Lisbon",job:"독립 라디오 프로듀서",desire:"혼돈 없는 자유",fear:"그럴듯하지만 출구 없는 삶",object:"황동 열쇠",line:"당신은 더 안전한 삶이 아니라, 언제든 나갈 수 있는 삶을 원했다.",decision:"정답을 고르는 대신 출구를 하나 남겨둔 결정."},
+"LOHE":{n:"THE PRIVATE REVOLUTIONARY",ko:"사적인 혁명가",city:"Helsinki",job:"탐사 사운드 아티스트",desire:"진실과 이동",fear:"안정으로 위장한 순응",object:"카세트 테이프",line:"아무도 시작을 보지 못할 만큼 조용히 모든 것을 바꿨다.",decision:"설명하기 전에 먼저 떠나보기로 한 결정."},
+"LOVB":{n:"THE FAR HORIZON",ko:"먼 수평선",city:"Vancouver",job:"기후 테크 탐사 창업가",desire:"큰 의미",fear:"야망을 너무 작은 일에 쓰는 것",object:"나침반",line:"계속 걷다 보니 당신의 삶은 이력서보다 커졌다.",decision:"안전한 성공보다 큰 문제를 향해 가기로 한 결정."},
+"LOVE":{n:"THE DRIFTER WITH A PLAN",ko:"계획 있는 방랑자",city:"Copenhagen",job:"문화 전략가",desire:"목적 있는 이동",fear:"자유가 공허가 되는 것",object:"교통 카드",line:"당신은 자주 떠났지만 단 한 번도 우연히 떠나지 않았다.",decision:"정착보다 리듬 있는 이동을 설계하기로 한 결정."},
+"LIHB":{n:"THE UNFINISHED LEGEND",ko:"미완의 전설",city:"Istanbul",job:"실험 건축가",desire:"가능성",fear:"완성이 곧 감옥이 되는 것",object:"찢긴 청사진",line:"당신은 미완성의 세계를 좋아했다. 아직 갈 곳이 남아 있었으니까.",decision:"끝내는 것보다 계속 변할 수 있는 것을 택한 결정."},
+"LIHE":{n:"THE VANISHING ACT",ko:"사라지는 사람",city:"Reykjavik",job:"다큐멘터리 로케이션 스카우트",desire:"재발명",fear:"스스로에게 예측 가능한 사람이 되는 것",object:"접힌 지도",line:"예전 삶이 당신을 부르기 전에, 당신은 먼저 사라졌다.",decision:"익숙함이 이름을 붙이기 전에 떠난 결정."},
+"LIVB":{n:"THE OTHER SUN",ko:"또 다른 태양",city:"Mexico City",job:"독립 패션 레이블 창립자",desire:"자기 발명",fear:"남의 미감 속에서 사는 것",object:"금색 안전핀",line:"당신은 자리를 찾지 않았다. 존재할 만큼 선명하게 직접 만들었다.",decision:"허락을 기다리기보다 자신의 세계를 공개한 결정."},
+"LIVE":{n:"THE BEAUTIFUL MISTAKE",ko:"아름다운 실수",city:"Naples",job:"세트 디자이너",desire:"예측 불가능한 생",fear:"완벽하게 계획된 삶",object:"금이 간 거울",line:"당신의 가장 좋은 삶은 모두가 무모하다고 말한 결정에서 시작됐다.",decision:"정답보다 살아 있다는 감각을 택한 결정."}
+};
+let qi=0,picks=[],s={stay:0,leave:0,order:0,impulse:0,hidden:0,seen:0,build:0,experience:0},current=null,currentKey="";
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active")}
+function startTest(){qi=0;picks=[];s={stay:0,leave:0,order:0,impulse:0,hidden:0,seen:0,build:0,experience:0};show("test");renderQ()}
+function renderQ(){const q=questions[qi];document.getElementById("qnum").textContent=String(qi+1).padStart(2,"0");document.getElementById("stepText").textContent=String(qi+1).padStart(2,"0")+" / 08";document.getElementById("progressBar").style.width=((qi+1)/8*100)+"%";document.getElementById("qtext").textContent=q[0];document.getElementById("answers").innerHTML=q[1].map((a,i)=>'<button class="answer" onclick="choose('+i+')"><span>'+String.fromCharCode(65+i)+'</span><span>'+a[0]+'</span></button>').join("")}
+function choose(i){picks.push(i);Object.entries(questions[qi][1][i][1]).forEach(([k,v])=>s[k]+=v);qi++;if(qi<questions.length)renderQ();else finish()}
+function keyFromScores(){let sl=s.leave+s.stay,oi=s.impulse+s.order,hv=s.seen+s.hidden,be=s.experience+s.build;const p7=picks[6]??0,p8=picks[7]??0;if(sl===0)sl=(p7>=2)?1:-1;if(oi===0)oi=(p7%2===1)?1:-1;if(hv===0)hv=(p8>=2)?1:-1;if(be===0)be=(p8%2===1)?1:-1;return (sl>0?"L":"S")+(oi>0?"I":"O")+(hv>0?"V":"H")+(be>0?"E":"B")}
+function finish(){currentKey=keyFromScores();current=archetypes[currentKey]||archetypes.LOHB;show("reveal");setTimeout(renderResult,1200)}
+function renderResult(){document.getElementById("poster").className="poster "+currentKey;document.getElementById("ghostId").textContent="GHOST ID / "+currentKey;document.getElementById("resultTitle").innerHTML=current.n.split(" ").slice(0,-1).join(" ")+"<em>"+current.n.split(" ").slice(-1)+"</em>";document.getElementById("heroLine").textContent="“"+current.line+"”";document.getElementById("coords").innerHTML="<span>"+current.city+"</span><span>"+current.job+"</span><span>"+current.object+"</span>";document.getElementById("resultKo").textContent=current.ko;document.getElementById("facts").innerHTML='<div class="fact"><small>Desire</small><b>'+current.desire+'</b></div><div class="fact"><small>Fear</small><b>'+current.fear+'</b></div><div class="fact"><small>City</small><b>'+current.city+'</b></div><div class="fact"><small>Object</small><b>'+current.object+'</b></div>';document.getElementById("decision").innerHTML='<span class="eyebrow">THE DECISION THAT CREATED THIS LIFE</span><br><br>'+current.decision;show("result");history.replaceState(null,"","#"+currentKey)}
+
+function splitTitleLines(name){
+  const words=name.split(" ");
+  if(words.length<=2)return [name];
+  const cut=Math.ceil(words.length/2);
+  return [words.slice(0,cut).join(" "),words.slice(cut).join(" ")];
+}
+function wrapCanvasText(ctx,text,maxWidth){
+  const words=text.split(" "); const lines=[]; let line="";
+  for(const word of words){const test=line?line+" "+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}
+  if(line)lines.push(line); return lines;
+}
+function posterPalette(key){
+  if(key==="LIVE")return {bg1:"#211a15",bg2:"#090909",accent:"#d7b67a",line:"rgba(255,255,255,.24)"};
+  if(key==="SOHB")return {bg1:"#080807",bg2:"#15100b",accent:"#b89b68",line:"rgba(197,165,109,.22)"};
+  return {bg1:"#06080a",bg2:"#22190f",accent:"#c5a56d",line:"rgba(197,165,109,.28)"};
+}
+function buildPosterCanvas(){
+  const W=1080,H=1920,canvas=document.createElement("canvas");canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext("2d"),p=posterPalette(currentKey);
+  const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,p.bg1);g.addColorStop(.62,"#090909");g.addColorStop(1,p.bg2);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle=p.line;ctx.lineWidth=2;
+  if(currentKey==="LIVE"){
+    ctx.save();ctx.translate(650,500);ctx.rotate(.2);ctx.strokeRect(-60,-120,520,1040);ctx.restore();
+    ctx.beginPath();ctx.arc(900,410,290,0,Math.PI*2);ctx.stroke();
+  }else if(currentKey==="SOHB"){
+    ctx.strokeRect(96,128,888,1664);ctx.strokeRect(760,150,180,180);
+  }else{
+    ctx.save();ctx.translate(540,960);ctx.rotate(-.07);ctx.strokeRect(-360,-700,720,1400);ctx.restore();
+    [560,640,720].forEach(y=>{ctx.beginPath();ctx.moveTo(610,y);ctx.lineTo(1040,y);ctx.stroke()});
+  }
+  ctx.fillStyle="#aaa39a";ctx.font="22px Arial";ctx.letterSpacing="4px";ctx.fillText("GHOSTLIFE / "+currentKey,76,96);
+  ctx.fillStyle="#f1eee7";ctx.font="92px Georgia";
+  const titleLines=splitTitleLines(current.n);let ty=580;
+  for(let i=0;i<titleLines.length;i++){ctx.fillStyle=i===titleLines.length-1?p.accent:"#f1eee7";ctx.fillText(titleLines[i],76,ty);ty+=104}
+  ctx.fillStyle="#ded8cf";ctx.font="40px Georgia";
+  const hero=wrapCanvasText(ctx,current.line,850);let hy=ty+80;for(const line of hero.slice(0,4)){ctx.fillText(line,76,hy);hy+=54}
+  ctx.fillStyle="#a9a39a";ctx.font="24px Arial";ctx.fillText(current.city.toUpperCase(),76,1640);ctx.fillText(current.job,76,1684);
+  ctx.strokeStyle="rgba(255,255,255,.18)";ctx.beginPath();ctx.moveTo(76,1738);ctx.lineTo(1004,1738);ctx.stroke();
+  ctx.fillStyle="#a9a39a";ctx.font="22px Arial";ctx.fillText(current.object,76,1792);
+  ctx.fillStyle="#f1eee7";ctx.font="20px Arial";ctx.fillText("당신이 살지 않은 삶",76,1850);
+  return canvas;
+}
+async function downloadPoster(){
+  if(!current)return;
+  const canvas=buildPosterCanvas();
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png",1));
+  const file=new File([blob],"GHOSTLIFE-"+currentKey+".png",{type:"image/png"});
+  if(navigator.canShare&&navigator.canShare({files:[file]})&&navigator.share){
+    try{await navigator.share({files:[file],title:"GHOSTLIFE — "+current.n,text:"당신이 살지 않은 삶"});return}catch(e){}
+  }
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=file.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+async function shareResult(){const text="내 GHOSTLIFE는 "+current.n+" — "+current.line+" #GHOSTLIFE";if(navigator.share){try{await navigator.share({title:"GHOSTLIFE — "+current.n,text,url:location.href});return}catch(e){}}await navigator.clipboard.writeText(text+" "+location.href);alert("결과 문구가 복사됐어요.")}
+function restart(){history.replaceState(null,"",location.pathname);startTest()}
+function openCompare(){document.getElementById("myCode").value=currentKey;document.getElementById("friendCode").value="";document.getElementById("duo").classList.remove("active");show("compare")}
+async function copyCode(){await navigator.clipboard.writeText(currentKey);document.getElementById("myCode").value=currentKey+" — 복사됨"}
+function makeDuo(){const fk=document.getElementById("friendCode").value.trim().toUpperCase();const f=archetypes[fk];if(!f){alert("4자리 GHOST 코드를 확인해주세요.");return}const scenes=["새벽 2시의 기차역","문 닫기 직전의 작은 서점","비가 시작된 항구","오래된 호텔의 엘리베이터","친구의 친구가 연 전시의 마지막 밤","낯선 도시의 심야 식당"];const idx=(currentKey+fk).split("").reduce((a,c)=>a+c.charCodeAt(0),0)%scenes.length;document.getElementById("duo").innerHTML='<div class="duo-card"><div class="eyebrow">YOU</div><h3>'+current.n+'</h3><p>'+current.city+' · '+current.object+'</p></div><div class="duo-card"><div class="eyebrow">THEM</div><h3>'+f.n+'</h3><p>'+f.city+' · '+f.object+'</p></div><div class="duo-card" style="grid-column:1/-1"><div class="eyebrow">WHERE YOU MEET</div><h3>'+scenes[idx]+'</h3><p>한 사람은 떠날 이유를 찾고 있었고, 다른 한 사람은 머물 이유를 만들고 있었습니다. 둘의 삶은 같은 장소가 아니라 같은 순간에서 겹칩니다.</p></div>';document.getElementById("duo").classList.add("active")}
+window.addEventListener("load",()=>{const h=location.hash.replace("#","").toUpperCase();if(archetypes[h]){currentKey=h;current=archetypes[h];renderResult()}})
+</script>
+</body>
+</html>
