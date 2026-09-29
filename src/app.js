@@ -2,6 +2,8 @@
  * GHOSTLIFE application behavior.
  * UI state, rendering, sharing, bilingual switching, and interaction live here.
  */
+
+// ── URL + language state ──────────────────────────────────────────────────
 const GL_PARAMS=new URLSearchParams(location.search);
 let lang=(GL_PARAMS.get("lang")==="ko"||GL_PARAMS.get("lang")==="en")?GL_PARAMS.get("lang"):(localStorage.getItem("gl_lang")||(navigator.language&&navigator.language.toLowerCase().startsWith("ko")?"ko":"en"));
 function t(key){return (uiCopy[lang]&&uiCopy[lang][key])||uiCopy.ko[key]||key}
@@ -72,6 +74,8 @@ if(archetypes[withKey]) invitedByKey=withKey;
 const duoRaw=(GL_PARAMS.get("duo")||"").toUpperCase();
 if(duoRaw.includes("-")){const [a,b]=duoRaw.split("-");if(archetypes[a]&&archetypes[b])duoPair=[a,b];}
 let qi=0,picks=[],s={stay:0,leave:0,order:0,impulse:0,hidden:0,seen:0,build:0,experience:0},current=null,currentKey="";
+
+// ── Screen state ──────────────────────────────────────────────────────────
 function show(id){
   document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
   const el=document.getElementById(id);el.classList.add("active");el.setAttribute("tabindex","-1");
@@ -83,6 +87,8 @@ function resetQuizUI(){
   const answers=document.getElementById("answers");
   if(answers)answers.innerHTML="";
 }
+
+// ── Quiz flow ─────────────────────────────────────────────────────────────
 function startTest(){
   qi=0;picks=[];s={stay:0,leave:0,order:0,impulse:0,hidden:0,seen:0,build:0,experience:0};
   resetQuizUI();
@@ -106,6 +112,8 @@ function choose(i){
   },170)
 }
 function keyFromScores(){return ghostKeyFromScores(s,picks)}
+
+// ── Result flow ───────────────────────────────────────────────────────────
 function finish(){
   currentKey=keyFromScores();current=archetypes[currentKey]||archetypes.LOHB;show("reveal");
   const phase=document.getElementById("revealPhase");phase.textContent="SIGNAL";
@@ -139,6 +147,8 @@ function wrapCanvasText(ctx,text,maxWidth){
   for(const word of words){const test=line?line+" "+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}
   if(line)lines.push(line); return lines;
 }
+
+// ── Generative result visuals ─────────────────────────────────────────────
 function posterPalette(key){const p=visualProfiles[key]||visualProfiles.LOHB;return {bg1:p.b1,bg2:p.b2,accent:p.a,line:p.a+"55"}}
 function drawEmblem(ctx,key,cx,cy,size,accent){
   const b={L:1,S:0,I:1,O:0,V:1,H:0,E:1,B:0},bits=[...key].map(x=>b[x]||0);
@@ -150,6 +160,8 @@ function drawEmblem(ctx,key,cx,cy,size,accent){
   else ctx.strokeRect(-size*.28,-size*.28,size*.56,size*.56);
   ctx.restore();
 }
+
+// ── Poster rendering ──────────────────────────────────────────────────────
 function buildPosterCanvas(){
   const W=1080,H=1920,canvas=document.createElement("canvas");canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext("2d"),p=posterPalette(currentKey),v=getArchetypeView(currentKey);
@@ -174,6 +186,8 @@ function buildPosterCanvas(){
   ctx.fillStyle="#f1eee7";ctx.font="500 20px "+uiFont;ctx.fillText(t("posterFooter"),76,1850);
   return canvas;
 }
+
+// ── Sharing + restart ─────────────────────────────────────────────────────
 async function downloadPoster(){
   if(!current)return;track("poster_export",{result:currentKey});
   const canvas=buildPosterCanvas();
@@ -216,6 +230,8 @@ async function shareCompareInvite(){
   if(navigator.share){try{await navigator.share({title:lang==="ko"?"GHOSTLIFE — 같이 해볼래?":"GHOSTLIFE — Find your other life",text,url});track("share_export",{type:"invite",result:currentKey,method:"native"});return}catch(e){}}
   await navigator.clipboard.writeText(text+" "+url);track("share_export",{type:"invite",result:currentKey,method:"clipboard"});alert(t("copiedInvite"));
 }
+
+// ── Friend comparison / dual timeline ────────────────────────────────────
 function duoData(a,b){
   const seed=(a+b).split("").reduce((n,ch)=>n+ch.charCodeAt(0),0),cp=duoCopy[lang],A=getArchetypeView(a),B=getArchetypeView(b);
   return {scene:cp.scenes[seed%cp.scenes.length],reason:cp.reasons[(seed>>1)%cp.reasons.length],clash:cp.clashes[(seed>>2)%cp.clashes.length],shared:(A.object+" × "+B.object)};
@@ -283,6 +299,8 @@ function renderStandaloneDuo(a,b,trackVisit=true){
   duoPair=[a,b];document.getElementById("duo").innerHTML=duoHtml(a,b);document.getElementById("duo").classList.add("active");document.getElementById("duoActions").style.display="flex";document.getElementById("compareInputs").style.display="none";document.getElementById("returnResult").style.display="none";show("compare");if(trackVisit)track("compare_visit",{a,b});
 }
 
+
+// ── Centralized UI actions ────────────────────────────────────────────────
 function handleActionClick(event){
   const button=event.target.closest("[data-action]");
   if(!button)return;
@@ -309,6 +327,8 @@ function handleActionClick(event){
 
 document.addEventListener("click",handleActionClick);
 
+
+// ── Boot ──────────────────────────────────────────────────────────────────
 window.addEventListener("load",()=>{
   applyLanguage();
   renderInviteNote();
