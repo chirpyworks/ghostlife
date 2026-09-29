@@ -1,10 +1,13 @@
-# Public source notice
+# GHOSTLIFE
 
-This repository is a deployable public artifact for the GHOSTLIFE web experience.
+GHOSTLIFE is an open-source project released under the MIT License.
 
-Canonical product development is maintained privately. Public visibility is for
-hosting, testing, review, and distribution; it should not be interpreted as an
-open-source grant.
+Original concept, implementation and art direction: **chirpyworks / RUDA**.
 
-If you discover a credential, private key, or sensitive configuration in this
-repository, please report it to the repository owner rather than redistributing it.
+Forks, remixes, experiments and commercial adaptations are permitted under the
+terms of the MIT License. Keeping a visible attribution to the original project
+is appreciated, but the MIT License only requires preservation of its copyright
+and permission notice in copies or substantial portions of the software.
+
+Security note: if you discover an exposed credential or private key, please
+report it to the repository owner rather than redistributing it.
