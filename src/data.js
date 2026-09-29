@@ -3,7 +3,11 @@
  * Questions, archetypes, bilingual copy, and visual profiles live here so
  * remixes can change content without touching application behavior.
  */
+
+// ── Axis vocabulary ───────────────────────────────────────────────────────
 const A={stay:'S',leave:'L',order:'O',impulse:'I',hidden:'H',seen:'V',build:'B',experience:'E'};
+
+// ── Scoring matrix ────────────────────────────────────────────────────────
 const questionScores=[
 [{stay:-1,order:-1},{stay:-1,impulse:1},{leave:1,order:-1},{leave:1,impulse:1}],
 [{hidden:-1,build:-1},{hidden:-1,experience:1},{seen:1,build:-1},{seen:1,experience:1}],
@@ -14,6 +18,8 @@ const questionScores=[
 [{stay:-1,order:-1},{stay:-1,impulse:1},{leave:1,order:-1},{leave:1,impulse:1}],
 [{hidden:-1,build:-1},{hidden:-1,experience:1},{seen:1,build:-1},{seen:1,experience:1}]
 ];
+
+// ── Native KR / EN question copy ──────────────────────────────────────────
 const questionCopy={
 ko:[
 {q:"낯선 도시에서 막차를 놓쳤다. 나는?",a:["근처에서 자고, 아침에 다시 움직인다.","일단 걷는다. 어디까지 갈지는 걷다가 정한다.","오늘 안에 다른 도시로 갈 방법부터 찾는다.","첫차를 타고, 내린 곳에서 다음을 정한다."]},
@@ -37,6 +43,8 @@ en:[
 ]
 };
 
+
+// ── Korean archetype narratives ───────────────────────────────────────────
 const archetypes={
 "SOHB":{n:"THE QUIET EMPEROR",ko:"고요한 황제",city:"Kyoto",job:"복원 공방의 주인",desire:"오래 두고 봐도 좋은 완성도",fear:"의미가 흐려지는 것",object:"옻칠 상자",line:"작은 세계를 오래 가꿨다. 모두에게 이해받을 필요는 없었다.",decision:"멀리 가는 대신, 한곳을 오래 깊게 파고들었다."},
 "SOHE":{n:"THE MEMORY ENGINEER",ko:"기억의 설계자",city:"Vienna",job:"아카이브 필름메이커",desire:"사라지기 전에 남겨두는 일",fear:"되돌릴 수 없는 상실",object:"35mm 슬라이드",line:"다들 지나친 것들이 먼저 눈에 들어왔다. 사라지기 전에 남겨두는 사람이 됐다.",decision:"새로운 것보다, 사라지는 것을 먼저 보기 시작했다."},
@@ -55,6 +63,8 @@ const archetypes={
 "LIVB":{n:"THE OTHER SUN",ko:"또 다른 태양",city:"Mexico City",job:"독립 패션 레이블 창립자",desire:"내 취향대로 만든 세계",fear:"남이 정한 기준 안에서 사는 것",object:"금색 안전핀",line:"들어갈 자리가 없으면 직접 만들었다. 남의 취향에 맞출 생각은 없었다.",decision:"허락을 기다리기보다, 먼저 내 자리를 만들었다."},
 "LIVE":{n:"THE BEAUTIFUL MISTAKE",ko:"아름다운 실수",city:"Naples",job:"세트 디자이너",desire:"예상 밖으로 흘러가는 삶",fear:"너무 잘 짜여 있어 놀랄 일이 없는 하루",object:"금이 간 거울",line:"돌이켜보면 가장 좋았던 선택은 처음엔 실수처럼 보였던 것들이었다.",decision:"정답처럼 보이는 길보다, 마음이 먼저 가는 쪽을 골랐다."}
 };
+
+// ── English archetype narratives ──────────────────────────────────────────
 const archetypeEn={
 "SOHB":{job:"Restoration atelier owner",desire:"work that still feels right years later",fear:"watching meaning get watered down",object:"lacquer box",line:"I built a small world slowly. I never needed everyone to understand it.",decision:"I chose to go deeper instead of farther."},
 "SOHE":{job:"Archival filmmaker",desire:"saving things before they disappear",fear:"a loss that can’t be recovered",object:"35mm slide",line:"I noticed what everyone else walked past, then saved it before it vanished.",decision:"I stopped chasing the new and started watching what was disappearing."},
@@ -73,6 +83,8 @@ const archetypeEn={
 "LIVB":{job:"Independent fashion label founder",desire:"a world built to my own taste",fear:"living inside someone else’s standards",object:"gold safety pin",line:"If there wasn’t a place for me, I made one. I never planned to fit someone else’s taste.",decision:"I stopped waiting for permission and made the place myself."},
 "LIVE":{job:"Set designer",desire:"a life that keeps taking unexpected turns",fear:"days so perfectly arranged that nothing can surprise me",object:"cracked mirror",line:"Looking back, the best choices were the ones that first looked like mistakes.",decision:"I followed the pull before I knew where it led."}
 };
+
+// ── Interface copy ────────────────────────────────────────────────────────
 const uiCopy={
 ko:{
 heroTitle:'<span class="line">그때 다른 선택을 했다면,</span><span class="line">나는 지금</span><em>어떤 삶을 살고 있을까?</em>',
@@ -105,6 +117,8 @@ copiedInvite:"Invite link copied.",copiedDuo:"Dual-result link copied.",
 firstGhost:"FIRST GHOST",secondGhost:"SECOND GHOST",whereMeet:"WHERE YOU MEET",clash:"WHERE YOU CLASH",shared:"WHAT YOU SHARE"
 }
 };
+
+// ── Dual-result scene copy ────────────────────────────────────────────────
 const duoCopy={
 ko:{
 scenes:["새벽 두 시의 기차역","문 닫기 직전의 작은 서점","비가 막 시작된 항구","오래된 호텔의 엘리베이터","전시가 끝난 뒤 텅 빈 계단","낯선 도시의 심야 식당","첫 배가 들어오는 부두","비행기 지연 안내가 뜬 공항 라운지"],
@@ -118,6 +132,8 @@ clashes:["One of you watches for the moment to leave; the other keeps finding re
 }
 };
 
+
+// ── 16-result visual profile system ───────────────────────────────────────
 const visualProfiles={
 SOHB:{a:"#b69a69",b1:"#070706",b2:"#171109"},SOHE:{a:"#9d8b73",b1:"#0a0908",b2:"#18140f"},
 SOVB:{a:"#b5ad9f",b1:"#080808",b2:"#141414"},SOVE:{a:"#8f9b78",b1:"#080a08",b2:"#14170f"},
