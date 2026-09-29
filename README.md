@@ -1,39 +1,67 @@
 # GHOSTLIFE
 
-**지금과 다른 선택을 했다면, 나는 어떤 사람이 되었을까?**
+**그때 다른 선택을 했다면, 나는 지금 어떤 삶을 살고 있을까?**
 
-GHOSTLIFE is a public interactive experience by chirpyworks.
+GHOSTLIFE is an open-source alternate-life identity experience by **chirpyworks / RUDA**.
 
 ## Try it
 
 https://chirpyworks.github.io/ghostlife/
 
-## Repository status
+## What it is
 
-This repository is the **public deployment mirror** for GHOSTLIFE.
+Choose between four options across eight imagined scenes.  
+At the end, GHOSTLIFE maps those choices to one of 16 alternate-life archetypes.
 
-It is intentionally public so the web experience can be hosted and tested openly.  
-It is **not an open-source release**, and no open-source license is granted.
+It is designed as an entertainment experience, not as a psychological or personality diagnosis.
 
-The canonical product source, product strategy, scoring research, visual-system specifications, and unreleased commercial logic are maintained privately.
+## Features
 
-## Public build
-
-The deployed experience currently includes:
 - 8 scene-based choices
-- 16 alternate-life results
+- 16 alternate-life archetypes
+- Korean / English toggle with separately written native copy
 - shareable result posters
-- friend invite / dual-result flow
-- privacy-safe product analytics instrumentation
+- friend invite flow
+- dual-result scenes
+- responsive desktop / mobile layouts
+- GA4 product-event instrumentation
+- GitHub Pages deployment
+- automatic KR / EN Open Graph preview rendering
 
-## Reuse
+## Run locally
 
-Viewing or forking a public GitHub repository does not mean the project has been released under an open-source license.
+No build step is required.
 
-Please do not copy, redistribute, rebrand, sell, or publish derivative versions of GHOSTLIFE or its protected creative/product assets without permission.
+```bash
+git clone https://github.com/chirpyworks/ghostlife.git
+cd ghostlife
+python3 -m http.server 8080
+```
 
-## Contact
+Then open:
 
-Operated by chirpyworks / RUDA.
+`http://localhost:8080`
 
-GHOSTLIFE is an entertainment experience, not a psychological or personality diagnosis.
+You can also open `index.html` directly, although a local web server is more reliable for browser features.
+
+## Remix
+
+Fork it, rewrite the questions, replace the archetypes, change the visual grammar, or turn it into a completely different choice-based experience.
+
+The current project intentionally keeps the implementation simple: static HTML, CSS and JavaScript, with no login or backend required for the core experience.
+
+If you make something interesting from it, attribution back to GHOSTLIFE / chirpyworks is appreciated.
+
+## Project structure
+
+- `index.html` — main application
+- `privacy.html` — KR / EN privacy notice
+- `en.html` — English social-share entry page
+- `og-ghostlife*.svg/png` — social preview assets
+- `.github/workflows/` — release guard and OG raster automation
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+Copyright © 2026 chirpyworks.
