@@ -200,7 +200,7 @@ html[lang="en"] .answer{line-height:1.48}
 </head>
 <body>
 <main class="app">
-<div class="lang-switch" role="group" aria-label="Language"><button id="langKo" type="button" onclick="setLang(\'ko\')">KR</button><button id="langEn" type="button" onclick="setLang(\'en\')">EN</button></div>
+<div class="lang-switch" role="group" aria-label="Language"><button id="langKo" type="button">KR</button><button id="langEn" type="button">EN</button></div>
 <section id="landing" class="screen landing active">
   <div class="brand"><strong>GHOSTLIFE</strong><span class="counter">AN ALTERNATE LIFE INDEX</span></div>
   <div class="hero">
@@ -272,7 +272,7 @@ html[lang="en"] .answer{line-height:1.48}
     <button class="btn secondary" data-i18n="shareDuo" onclick="shareDuo()">둘의 장면 공유</button>
     <button class="btn secondary" data-i18n="tryIt" onclick="startFresh()">나도 해보기</button>
   </div>
-  <div id="returnResult" style="margin-top:30px"><button class="btn secondary" data-i18n="backResult" onclick="show(\'result\')">내 결과로 돌아가기</button></div>
+  <div id="returnResult" style="margin-top:30px"><button class="btn secondary" data-i18n="backResult" onclick="show('result')">내 결과로 돌아가기</button></div>
 </section>
 </main>
 <script>
@@ -472,6 +472,9 @@ function setLang(next){
   if(currentKey&&document.getElementById("result").classList.contains("active"))renderResult(false);
   if(duoPair&&document.getElementById("compare").classList.contains("active"))renderStandaloneDuo(duoPair[0],duoPair[1],false);
 }
+document.getElementById("langKo").addEventListener("click",()=>setLang("ko"));
+document.getElementById("langEn").addEventListener("click",()=>setLang("en"));
+
 function buildUrl(params={},hash=""){
   const u=new URL(location.origin+location.pathname);
   Object.entries(params).forEach(([k,v])=>{if(v!=null&&v!=="")u.searchParams.set(k,v)});
