@@ -10,6 +10,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: render-og
+  cancel-in-progress: true
+
 jobs:
   render:
     if: github.actor != 'github-actions[bot]'
@@ -42,5 +46,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add og-ghostlife.png og-ghostlife-kr-v2.png og-ghostlife-en.png
-          git commit -m "Update raster OG preview"
+          git commit -m "Update raster OG previews"
+          git pull --rebase origin main
           git push
