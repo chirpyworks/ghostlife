@@ -160,3 +160,9 @@ html[lang="en"] .answer{line-height:1.48}
   .compare h2{font-size:clamp(42px,11.5vw,62px)}
   .timeline-scene{height:58svh}
 }
+
+/* Structural utility classes */
+.share-code-secondary{margin-top:10px}
+#duoActions{display:none}
+.return-result{margin-top:30px}
+.span-all{grid-column:1/-1}
