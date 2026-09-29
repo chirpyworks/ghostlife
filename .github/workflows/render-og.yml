@@ -16,16 +16,17 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Install Korean font and SVG renderer
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y librsvg2-bin fonts-noto-cjk fonts-noto-cjk-extra
+          fc-cache -f
+
       - name: Render SVG to PNG
         run: |
           set -e
-          if command -v rsvg-convert >/dev/null 2>&1; then
-            rsvg-convert -w 1200 -h 630 -o og-ghostlife.png og-ghostlife.svg
-          else
-            sudo apt-get update -y
-            sudo apt-get install -y librsvg2-bin
-            rsvg-convert -w 1200 -h 630 -o og-ghostlife.png og-ghostlife.svg
-          fi
+          fc-match "Noto Sans CJK KR"
+          rsvg-convert -w 1200 -h 630 -o og-ghostlife.png og-ghostlife.svg
           file og-ghostlife.png
 
       - name: Commit raster preview
