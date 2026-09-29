@@ -1,0 +1,27 @@
+name: Project QA
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Syntax check
+        run: |
+          node --check src/data.js
+          node --check src/scoring.js
+          node --check src/analytics.js
+          node --check src/app.js
+      - name: Exhaustive product QA
+        run: node tests/project.test.js
