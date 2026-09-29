@@ -27,16 +27,17 @@ jobs:
           set -e
           fc-match "Noto Sans CJK KR"
           rsvg-convert -w 1200 -h 630 -o og-ghostlife.png og-ghostlife.svg
+          cp og-ghostlife.png og-ghostlife-kr-v2.png
           file og-ghostlife.png
 
       - name: Commit raster preview
         run: |
-          if [ -z "$(git status --porcelain -- og-ghostlife.png)" ]; then
+          if [ -z "$(git status --porcelain -- og-ghostlife.png og-ghostlife-kr-v2.png)" ]; then
             echo "No OG image change."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add og-ghostlife.png
+          git add og-ghostlife.png og-ghostlife-kr-v2.png
           git commit -m "Update raster OG preview"
           git push
