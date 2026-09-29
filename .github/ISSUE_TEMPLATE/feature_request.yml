@@ -1,0 +1,42 @@
+name: Feature or remix idea
+description: Suggest an improvement, experiment, or remix direction
+title: "[Idea] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you change?
+      description: Describe the user-facing idea first.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why would it make GHOSTLIFE better?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Questions / copy
+        - Archetypes
+        - Scoring
+        - Visual system
+        - Sharing / viral loop
+        - Accessibility
+        - Performance
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation notes
+      description: Optional. Keep this focused and dependency-light.
