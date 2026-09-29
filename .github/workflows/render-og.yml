@@ -14,7 +14,7 @@ jobs:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Render SVG to PNG
         run: |
@@ -30,7 +30,7 @@ jobs:
 
       - name: Commit raster preview
         run: |
-          if git diff --quiet -- og-ghostlife.png && [ -f og-ghostlife.png ]; then
+          if [ -z "$(git status --porcelain -- og-ghostlife.png)" ]; then
             echo "No OG image change."
             exit 0
           fi
