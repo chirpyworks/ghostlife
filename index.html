@@ -456,6 +456,8 @@ function applyLanguage(){
   localStorage.setItem("gl_lang",lang);
   document.getElementById("langKo")?.classList.toggle("active",lang==="ko");
   document.getElementById("langEn")?.classList.toggle("active",lang==="en");
+  document.getElementById("langKo")?.setAttribute("aria-pressed",lang==="ko"?"true":"false");
+  document.getElementById("langEn")?.setAttribute("aria-pressed",lang==="en"?"true":"false");
   document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(uiCopy[lang][k]!=null)el.textContent=uiCopy[lang][k]});
   document.querySelectorAll("[data-i18n-html]").forEach(el=>{const k=el.dataset.i18nHtml;if(uiCopy[lang][k]!=null)el.innerHTML=uiCopy[lang][k]});
   const friend=document.getElementById("friendCode");if(friend){friend.placeholder=t("friendPlaceholder");friend.setAttribute("aria-label",t("friendCodeLabel"))}
@@ -468,9 +470,24 @@ function setLang(next){
   const u=new URL(location.href);if(lang==="en")u.searchParams.set("lang","en");else u.searchParams.delete("lang");
   history.replaceState(null,"",u.pathname+(u.searchParams.toString()?"?"+u.searchParams.toString():"")+u.hash);
   applyLanguage();renderInviteNote();
+
   if(document.getElementById("test").classList.contains("active"))renderQ();
-  if(currentKey&&document.getElementById("result").classList.contains("active"))renderResult(false);
-  if(duoPair&&document.getElementById("compare").classList.contains("active"))renderStandaloneDuo(duoPair[0],duoPair[1],false);
+
+  if(currentKey&&document.getElementById("result").classList.contains("active")){
+    renderResult(false,false);
+  }
+
+  if(duoPair&&document.getElementById("compare").classList.contains("active")){
+    const inputs=document.getElementById("compareInputs");
+    const standalone=inputs.style.display==="none";
+    if(standalone){
+      renderStandaloneDuo(duoPair[0],duoPair[1],false);
+    }else{
+      const duo=document.getElementById("duo");
+      duo.innerHTML=duoHtml(duoPair[0],duoPair[1]);
+      duo.classList.add("active");
+    }
+  }
 }
 document.getElementById("langKo").addEventListener("click",()=>setLang("ko"));
 document.getElementById("langEn").addEventListener("click",()=>setLang("en"));
@@ -537,7 +554,7 @@ function finish(){
   setTimeout(()=>phase.textContent="SPLIT",430);setTimeout(()=>phase.textContent="LOCK",980);
   setTimeout(renderResult,1580)
 }
-function renderResult(trackView=true){
+function renderResult(trackView=true,trackCompare=true){
   const v=getArchetypeView(currentKey);
   applyVisualSystem(currentKey);
   document.getElementById("ghostId").textContent="GHOST ID / "+currentKey;
@@ -550,7 +567,7 @@ function renderResult(trackView=true){
   show("result");
   history.replaceState(null,"",location.pathname+location.search+"#"+currentKey);
   if(trackView)track("result_view",{result:currentKey,invited:!!invitedByKey});
-  if(invitedByKey)renderAutoDuo(invitedByKey,currentKey);else{document.getElementById("autoDuo").classList.remove("active");document.getElementById("autoDuo").innerHTML="";}
+  if(invitedByKey)renderAutoDuo(invitedByKey,currentKey,trackCompare);else{document.getElementById("autoDuo").classList.remove("active");document.getElementById("autoDuo").innerHTML="";}
 }
 
 function splitTitleLines(name){
@@ -651,9 +668,9 @@ function duoHtml(a,b){
   '<div class="duo-card"><div class="eyebrow">'+t("secondGhost")+'</div><h3>'+B.n+'</h3><p>'+B.city+' · '+B.object+'</p></div>'+
   '<div class="duo-card" style="grid-column:1/-1"><div class="eyebrow">'+t("whereMeet")+'</div><h3>'+d.scene+'</h3><p class="duo-scene-copy">'+d.reason+'<br><br><strong>'+t("clash")+'</strong><br>'+d.clash+'<br><br><strong>'+t("shared")+'</strong><br>'+d.shared+'</p></div>';
 }
-function renderAutoDuo(a,b){
+function renderAutoDuo(a,b,trackCreate=true){
   const el=document.getElementById("autoDuo");el.innerHTML=duoHtml(a,b)+'<div class="duo-actions" style="grid-column:1/-1"><button class="btn" onclick="downloadDuoPoster(\''+a+'\',\''+b+'\')">'+t("saveDuoPoster")+'</button><button class="btn secondary" onclick="shareDuo(\''+a+'\',\''+b+'\')">'+t("shareDuo")+'</button></div>';el.classList.add("active");
-  track("compare_create",{a,b,automatic:true});
+  if(trackCreate)track("compare_create",{a,b,automatic:true});
 }
 function openCompare(){
   document.getElementById("compareInputs").style.display="";
