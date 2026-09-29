@@ -1,0 +1,41 @@
+name: Render OG PNG
+
+on:
+  push:
+    paths:
+      - "og-ghostlife.svg"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Render SVG to PNG
+        run: |
+          set -e
+          if command -v rsvg-convert >/dev/null 2>&1; then
+            rsvg-convert -w 1200 -h 630 -o og-ghostlife.png og-ghostlife.svg
+          else
+            sudo apt-get update -y
+            sudo apt-get install -y librsvg2-bin
+            rsvg-convert -w 1200 -h 630 -o og-ghostlife.png og-ghostlife.svg
+          fi
+          file og-ghostlife.png
+
+      - name: Commit raster preview
+        run: |
+          if git diff --quiet -- og-ghostlife.png && [ -f og-ghostlife.png ]; then
+            echo "No OG image change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add og-ghostlife.png
+          git commit -m "Update raster OG preview"
+          git push
