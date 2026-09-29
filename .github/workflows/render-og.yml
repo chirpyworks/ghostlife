@@ -1,0 +1,42 @@
+name: Render OG PNG
+
+on:
+  push:
+    paths:
+      - "og-ghostlife.svg"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Korean font and SVG renderer
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y librsvg2-bin fonts-noto-cjk fonts-noto-cjk-extra
+          fc-cache -f
+
+      - name: Render SVG to PNG
+        run: |
+          set -e
+          fc-match "Noto Sans CJK KR"
+          rsvg-convert -w 1200 -h 630 -o og-ghostlife.png og-ghostlife.svg
+          file og-ghostlife.png
+
+      - name: Commit raster preview
+        run: |
+          if [ -z "$(git status --porcelain -- og-ghostlife.png)" ]; then
+            echo "No OG image change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add og-ghostlife.png
+          git commit -m "Update raster OG preview"
+          git push
