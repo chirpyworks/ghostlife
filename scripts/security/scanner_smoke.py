@@ -28,7 +28,8 @@ def run_case(command, content, expected, label):
     return True
 
 def history_controls():
-    with tempfile.TemporaryDirectory() as temp:
+    # GitHub's shared runner temp is suitable for Docker bind mounts.
+    with tempfile.TemporaryDirectory(dir=os.environ.get("RUNNER_TEMP")) as temp:
         git = os.environ.get("GIT", "git")
         command = [git, "-C", temp]
         def execute(*args):
@@ -67,7 +68,8 @@ def history_controls():
             "-p", "--format=medium",
         ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if container_log.returncode or marker not in container_log.stdout:
-            print("Container could not read the synthetic Git history.", file=sys.stderr)
+            print("Container could not read the synthetic Git history (exit {}, bytes {}).".format(
+                container_log.returncode, len(container_log.stdout)), file=sys.stderr)
             return False
         print("Container synthetic Git history verified without printing its contents.")
         return run_case(scanner, None, 1, "removed synthetic sentinel in Git history")
