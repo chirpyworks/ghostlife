@@ -43,7 +43,7 @@ def history_controls():
                    "--cap-drop=ALL", "--security-opt=no-new-privileges",
                    "-v", str(CONFIG) + ":/config/gitleaks.toml:ro",
                    "-v", temp + ":/fixture:ro", IMAGE, "git", "/fixture",
-                   "--config=/config/gitleaks.toml", "--log-opts=--all",
+                   "--config=/config/gitleaks.toml", "--log-opts=--all --format=medium",
                    "--redact=100", "--no-banner", "--log-level=info", "--ignore-gitleaks-allow"]
         if not run_case(scanner, None, 0, "safe synthetic Git history"):
             return False
@@ -60,6 +60,16 @@ def history_controls():
         if marker not in history or marker in path.read_bytes():
             print("Synthetic Git-history construction failed.", file=sys.stderr)
             return False
+        container_log = subprocess.run([
+            "docker", "run", "--rm", "--network=none", "--read-only",
+            "--cap-drop=ALL", "--security-opt=no-new-privileges", "--entrypoint=git",
+            "-v", temp + ":/fixture:ro", IMAGE, "-C", "/fixture", "log", "--all",
+            "-p", "--format=medium",
+        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if container_log.returncode or marker not in container_log.stdout:
+            print("Container could not read the synthetic Git history.", file=sys.stderr)
+            return False
+        print("Container synthetic Git history verified without printing its contents.")
         return run_case(scanner, None, 1, "removed synthetic sentinel in Git history")
 
 def main():
