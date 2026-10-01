@@ -25,7 +25,7 @@ jobs:
           scan() {
             label="$1"
             pattern="$2"
-            if grep -RInE --exclude-dir=.git --exclude='*.md' --exclude='LICENSE' "$pattern" .; then
+            if grep -RqE --exclude-dir=.git --exclude='*.md' --exclude='LICENSE' "$pattern" .; then
               echo "Potential secret pattern detected: $label"
               fail=1
             fi
