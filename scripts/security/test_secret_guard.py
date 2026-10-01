@@ -39,7 +39,8 @@ class SecretGuardTests(unittest.TestCase):
             return original_run(command, *args, **kwargs)
         with mock.patch.object(scanner_smoke, "run_case", side_effect=inspect_fixture):
             with mock.patch.object(scanner_smoke.subprocess, "run", side_effect=container_fixture_only):
-                self.assertTrue(scanner_smoke.history_controls())
+                with contextlib.redirect_stdout(io.StringIO()):
+                    self.assertTrue(scanner_smoke.history_controls())
         self.assertEqual([0, 1], seen)
 
     def test_git_failure_returns_two_without_payload(self):

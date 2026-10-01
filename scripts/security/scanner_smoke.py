@@ -42,6 +42,8 @@ def history_controls():
                 "commit", "-qm", "safe synthetic fixture")
         scanner = ["docker", "run", "--rm", "--network=none", "--read-only",
                    "--cap-drop=ALL", "--security-opt=no-new-privileges",
+                   "-e", "GIT_CONFIG_COUNT=1", "-e", "GIT_CONFIG_KEY_0=safe.directory",
+                   "-e", "GIT_CONFIG_VALUE_0=/fixture",
                    "-v", str(CONFIG) + ":/config/gitleaks.toml:ro",
                    "-v", temp + ":/fixture:ro", IMAGE, "git", "/fixture",
                    "--config=/config/gitleaks.toml", "--log-opts=--all --format=medium",
@@ -64,7 +66,8 @@ def history_controls():
         container_log = subprocess.run([
             "docker", "run", "--rm", "--network=none", "--read-only",
             "--cap-drop=ALL", "--security-opt=no-new-privileges", "--entrypoint=git",
-            "-v", temp + ":/fixture:ro", IMAGE, "-C", "/fixture", "log", "--all",
+            "-v", temp + ":/fixture:ro", IMAGE, "-c", "safe.directory=/fixture",
+            "-C", "/fixture", "log", "--all",
             "-p", "--format=medium",
         ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if container_log.returncode or marker not in container_log.stdout:
