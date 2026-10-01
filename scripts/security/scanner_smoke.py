@@ -30,6 +30,9 @@ def run_case(command, content, expected, label):
 def history_controls():
     # GitHub's shared runner temp is suitable for Docker bind mounts.
     with tempfile.TemporaryDirectory(dir=os.environ.get("RUNNER_TEMP")) as temp:
+        # This directory contains only inert fixtures. With capabilities dropped,
+        # container root cannot bypass the runner-owned mkdtemp default mode 0700.
+        Path(temp).chmod(0o755)
         git = os.environ.get("GIT", "git")
         command = [git, "-C", temp]
         def execute(*args):

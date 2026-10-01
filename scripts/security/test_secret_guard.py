@@ -23,6 +23,7 @@ class SecretGuardTests(unittest.TestCase):
             # Inspect real Git fixture construction; do not run or emulate Gitleaks.
             mount = next(item for item in command if item.endswith(":/fixture:ro"))
             folder = mount[:-len(":/fixture:ro")]
+            self.assertEqual(0o755, (Path(folder).stat().st_mode & 0o777))
             history = subprocess.check_output([GIT, "-C", folder, "log", "--all", "-p"])
             current = (Path(folder) / "fixture.txt").read_bytes()
             marker = b"ghp_" + b"SYNTHETICNONFUNCTIONAL".ljust(36, b"0")
