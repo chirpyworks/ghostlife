@@ -18,6 +18,11 @@ def run_case(command, content, expected, label):
     if result.returncode != expected:
         print("Scanner contract failed for {} (exit {}, expected {}).".format(
             label, result.returncode, expected), file=sys.stderr)
+        # Only scalar scan summaries from the synthetic fixture may be shown.
+        if "Git history" in label:
+            for line in result.stderr.decode(errors="replace").splitlines():
+                if any(summary in line for summary in ("commits scanned", "no leaks found", "leaks found")):
+                    print("Synthetic fixture summary: " + line[:200], file=sys.stderr)
         return False
     print("Scanner contract passed: " + label)
     return True
@@ -39,10 +44,11 @@ def history_controls():
                    "-v", str(CONFIG) + ":/config/gitleaks.toml:ro",
                    "-v", temp + ":/fixture:ro", IMAGE, "git", "/fixture",
                    "--config=/config/gitleaks.toml", "--log-opts=--all",
-                   "--redact=100", "--no-banner", "--log-level=error", "--ignore-gitleaks-allow"]
+                   "--redact=100", "--no-banner", "--log-level=info", "--ignore-gitleaks-allow"]
         if not run_case(scanner, None, 0, "safe synthetic Git history"):
             return False
-        path.write_bytes(b"ghp_" + b"SYNTHETICNONFUNCTIONAL".ljust(36, b"0") + b"\n")
+        marker = b"ghp_" + b"SYNTHETICNONFUNCTIONAL".ljust(36, b"0")
+        path.write_bytes(b"token" + b" = " + marker + b"\n")
         execute("add", "fixture.txt")
         execute("-c", "user.name=Synthetic test", "-c", "user.email=test@example.invalid",
                 "commit", "-qm", "nonfunctional synthetic sentinel")
@@ -50,6 +56,10 @@ def history_controls():
         execute("add", "fixture.txt")
         execute("-c", "user.name=Synthetic test", "-c", "user.email=test@example.invalid",
                 "commit", "-qm", "remove synthetic sentinel from current tree")
+        history = subprocess.check_output(command + ["log", "--all", "-p"])
+        if marker not in history or marker in path.read_bytes():
+            print("Synthetic Git-history construction failed.", file=sys.stderr)
+            return False
         return run_case(scanner, None, 1, "removed synthetic sentinel in Git history")
 
 def main():
